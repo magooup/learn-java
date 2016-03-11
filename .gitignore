@@ -1,0 +1,20 @@
+## Git ignore for workspace-roboo
+
+# Global
+log
+target
+*.log
+
+# Eclipse
+.project
+.classpath
+.settings
+.metadata
+
+# IntelliJ idea
+.idea
+*.iml
+
+# Svn
+.svn
+
