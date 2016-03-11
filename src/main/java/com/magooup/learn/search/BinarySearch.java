@@ -1,4 +1,4 @@
-package learn.search;
+package com.magooup.learn.search;
 
 /**
  * BinarySearch

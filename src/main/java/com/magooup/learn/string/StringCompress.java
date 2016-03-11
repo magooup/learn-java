@@ -1,4 +1,4 @@
-package learn.string;
+package com.magooup.learn.string;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -1,4 +1,4 @@
-package syncronize;
+package com.magooup.learn.syncronize;
 
 public class WaitAndNotify {
     public static Object object = new Object();

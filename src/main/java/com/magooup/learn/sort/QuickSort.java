@@ -1,4 +1,4 @@
-package learn.sort;
+package com.magooup.learn.sort;
 
 import java.util.Arrays;
 

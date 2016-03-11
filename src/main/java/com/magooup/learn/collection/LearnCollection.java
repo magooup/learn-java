@@ -1,4 +1,4 @@
-package learn.collection;
+package com.magooup.learn.collection;
 
 import java.util.ArrayList;
 import java.util.HashMap;

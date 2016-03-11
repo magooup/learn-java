@@ -1,4 +1,4 @@
-package learn;
+package com.magooup.learn.gora;
 
 import org.apache.avro.Schema;
 import org.apache.gora.hbase.store.HBaseStore;
@@ -10,7 +10,7 @@ import org.apache.gora.store.DataStore;
 /**
  * Created by zhiyong.ma on 2016/2/25.
  */
-public class TestGora {
+public class GoraTester {
 
     public static void main(String[] args) {
 

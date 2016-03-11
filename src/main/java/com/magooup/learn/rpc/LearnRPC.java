@@ -1,4 +1,4 @@
-package learn.rpc;
+package com.magooup.learn.rpc;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Created by zhiyong.ma on 2016/3/10.
  */
-public class LittleRPC {
+public class LearnRPC {
 
     static Client client = new Client();
 
