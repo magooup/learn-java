@@ -5,7 +5,12 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Learner {
 
-    static ReentrantLock lock = new ReentrantLock(false);
+
+    public static void main(String[] args) {
+
+    }
+
+    
 
 
 }
