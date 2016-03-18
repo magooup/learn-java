@@ -11,7 +11,7 @@ public class LearnClass {
 
     public static void main(String[] args) throws Throwable {
 
-        demoForAllMethods();
+        demoForConstructors();
     }
 
     public static void demoForAllMethods() {
@@ -31,8 +31,8 @@ public class LearnClass {
     }
 
     public static void demoForConstructors() {
-        printClassConstructors(new GrandSon1().getClass(), EMPTY_ARRAY);
-        printClassConstructors(new GrandSon2().getClass(), EMPTY_ARRAY);
+        printClassConstructors(GrandSon1.class, EMPTY_ARRAY);
+        printClassConstructors(GrandSon2.class, EMPTY_ARRAY);
     }
 
     public static void demoForNames() {
@@ -139,8 +139,6 @@ public class LearnClass {
     }
 
     static class GrandSon2 extends Son {
-        public GrandSon2() {
-        }
 
         public void call5() {
         }
