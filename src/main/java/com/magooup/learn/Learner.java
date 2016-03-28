@@ -1,47 +1,32 @@
 package com.magooup.learn;
 
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.TermQuery;
+
 public class Learner {
 
-    {
-    }
-
     public static void main(String[] args) throws Throwable {
-
-        int a = 1;
-        printClassNames(a);
-        Integer b = 1;
-        printClassNames(b);
-        int[] c = new int[1];
-        printClassNames(c);
-        Integer[] d = new Integer[1];
-        printClassNames(d);
-        Inner e = new Inner();
-        printClassNames(e);
-        InnerInterface f = new InnerInterface() {
-        };
-        printClassNames(f);
-        InnerAbstract g = new InnerAbstract() {
-        };
-        printClassNames(g);
-        Learner h = new Learner();
-        printClassNames(h);
-
+        Quartz
 
     }
 
-    static void printClassNames(Object object) {
-        System.out.println(String.format("Class[%s] with name[%s] with canonicalName[%s]", object.getClass(), object.getClass().getName(),
-                object.getClass().getCanonicalName()));
-    }
 
-    static interface InnerInterface {
-    }
+    static class Clazz {
 
-    static abstract class InnerAbstract {
-    }
+        void method1() throws InterruptedException {
+            System.out.println("i am method1 start");
+            Thread.sleep(2000);
+            //synchronized (this) {
+            //    wait(2000);
+            //}
+            System.out.println("i am method1 end");
+        }
 
-    static class Inner {
-
+        void method2() {
+            System.out.println("i am method2");
+        }
     }
 
 

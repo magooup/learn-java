@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Created by zhiyong.ma on 2016/3/10.
  */
-public class QuickSort {
+public class LearnQuickSort {
 
 
     public static void main(String[] args) {
