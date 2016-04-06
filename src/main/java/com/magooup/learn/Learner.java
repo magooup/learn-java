@@ -1,33 +1,32 @@
 package com.magooup.learn;
 
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.TermQuery;
 
-public class Learner {
+import org.apache.hadoop.io.ArrayFile;
+import org.apache.hadoop.io.Writable;
 
-    public static void main(String[] args) throws Throwable {
-        Quartz
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 
+public class Learner implements Cloneable {
+
+    public static void main(String[] args) {
+        ArrayFile.Writer arrayWriter;
     }
 
+    class Demo implements Writable {
 
-    static class Clazz {
+        @Override
+        public void write(DataOutput dataOutput) throws IOException {
 
-        void method1() throws InterruptedException {
-            System.out.println("i am method1 start");
-            Thread.sleep(2000);
-            //synchronized (this) {
-            //    wait(2000);
-            //}
-            System.out.println("i am method1 end");
         }
 
-        void method2() {
-            System.out.println("i am method2");
+        @Override
+        public void readFields(DataInput dataInput) throws IOException {
+
         }
     }
-
 
 }
+
+
