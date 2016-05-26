@@ -1,12 +1,12 @@
 package com.magooup.learn.search;
 
 /**
- * BinarySearch
+ * LearnBinary
  *
  * @author zhiyong.ma(zhiyong.ma@roboo.com)
  * @create 2015年6月29日
  */
-public class BinarySearch {
+public class LearnBinary {
     static int count = 0;
 
     public static void main(String[] args) {
