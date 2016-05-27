@@ -2,9 +2,7 @@ package com.magooup.learn.backpack;
 
 import common.Pair;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by zhiyong.ma on 2016/5/25.
@@ -12,46 +10,120 @@ import java.util.List;
 public class LearnBackpack {
 
     public static void main(String[] args) {
-        int capacity = 12;
-        int worth = 15;
-        Pair<Integer, Integer>[] inputs = new Pair[]{new Pair(4, 9), new Pair(3, 6), new Pair(5, 4), new Pair(2, 5), new Pair(5, 2)};
-        backpack2(inputs, capacity);
-        //backpack2(inputs, capacity, worth);
+        int capacity = 10;
+        int worth = 128;
+        Pair<Integer, Integer>[] inputs = new Pair[]{new Pair(4, 64), new Pair(3, 34), new Pair(3,58), new Pair(5, 56), new Pair(4, 60)};
+        //backpack1_2(inputs, capacity);
+        backpack2_2(inputs, capacity, worth);
     }
 
-    static void backpack3(Pair<Integer, Integer>[] inputs, int capacity, int worth) {
+
+    static void backpack2_1(Pair<Integer, Integer>[] inputs, int capacity, int worth) {
         int num = inputs.length;
-        int[][] dynamics = new int[num + 1][capacity + 1];
-        Arrays.fill(dynamics[0], 0);
-        for (int k = 1; k <= num; k++) {
-            for (int m = 1; m < k; m++) {
-                Arrays.fill(dynamics[m], 0);
-            }
-            int totol = 0;
-            for (int i = k; i <= num; i++) {
-                for (int j = 0; j <= capacity; j++) {
-                    dynamics[i][j] = dynamics[i - 1][j];
-                    if (j >= inputs[i - 1].getFirst()) {
-                        int max = Math.max(dynamics[i - 1][j - inputs[i - 1].getFirst()] + inputs[i - 1].getSecond(), dynamics[i][j]);
-                        if (max <= worth) {
-                            dynamics[i][j] = max;
-                        }
+
+        Set<Pair<List<Integer>, Integer>>[] records = new Set[capacity + 1];
+
+        for (int i = 1; i <= num; i++) {
+
+            Pair<Integer, Integer> input = inputs[i - 1];
+            int volume = input.getFirst();
+            int value = input.getSecond();
+            for (int j = capacity; j >= volume; j--) {
+                Set<Pair<List<Integer>, Integer>> lastRecord = records[j - volume];
+                Set<Pair<List<Integer>, Integer>> newRecord = new HashSet<>();
+                if (null != lastRecord) {
+                    for (Pair<List<Integer>, Integer> pair : lastRecord) {
+                        List<Integer> newNums = new ArrayList<>();
+                        newNums.addAll(pair.getFirst());
+                        newNums.add(i - 1);
+                        int newSum = pair.getSecond() + value;
+                        newRecord.add(new Pair(newNums, newSum));
                     }
                 }
-                if (dynamics[i][capacity] > dynamics[i - 1][capacity]) {
-                    System.out.println("Push: " + inputs[i - 1].toString());
-                    totol += inputs[i - 1].getFirst();
+                if (volume == j) {
+                    List<Integer> nums = new ArrayList<>();
+                    nums.add(i - 1);
+                    newRecord.add(new Pair(nums, value));
+                }
+                if (newRecord.size() > 0) {
+                    if (null == records[j]) {
+                        records[j] = newRecord;
+                    } else {
+                        records[j].addAll(newRecord);
+                    }
                 }
             }
-            if (dynamics[num][capacity] == worth && totol == capacity) {
-                break;
+
+        }
+
+        Set<Pair<List<Integer>, Integer>> result = records[capacity];
+        if (null == result) {
+            System.out.println("No result");
+        } else {
+            for (Pair<List<Integer>, Integer> pair : result) {
+                System.out.println(pair.getFirst());
+                System.out.println(pair.getSecond());
+                System.out.println();
             }
         }
-        System.out.println("Max worth is :" + dynamics[num][capacity]);
+
+
+    }
+
+    static void backpack2_2(Pair<Integer, Integer>[] inputs, int capacity, int worth) {
+        int num = inputs.length;
+
+        Set<Pair<List<Integer>, Integer>>[] records = new Set[capacity + 1];
+
+        for (int i = 1; i <= num; i++) {
+
+            Pair<Integer, Integer> input = inputs[i - 1];
+            int volume = input.getFirst();
+            int value = input.getSecond();
+            for (int j = volume; j <= capacity; j++) {
+                Set<Pair<List<Integer>, Integer>> lastRecord = records[j - volume];
+                Set<Pair<List<Integer>, Integer>> newRecord = new HashSet<>();
+                if (null != lastRecord) {
+                    for (Pair<List<Integer>, Integer> pair : lastRecord) {
+                        List<Integer> newNums = new ArrayList<>();
+                        newNums.addAll(pair.getFirst());
+                        newNums.add(i - 1);
+                        int newSum = pair.getSecond() + value;
+                        newRecord.add(new Pair(newNums, newSum));
+                    }
+                }
+                if (volume == j) {
+                    List<Integer> nums = new ArrayList<>();
+                    nums.add(i - 1);
+                    newRecord.add(new Pair(nums, value));
+                }
+                if (newRecord.size() > 0) {
+                    if (null == records[j]) {
+                        records[j] = newRecord;
+                    } else {
+                        records[j].addAll(newRecord);
+                    }
+                }
+            }
+
+        }
+
+        Set<Pair<List<Integer>, Integer>> result = records[capacity];
+        if (null == result) {
+            System.out.println("No result");
+        } else {
+            for (Pair<List<Integer>, Integer> pair : result) {
+                System.out.println(pair.getFirst());
+                System.out.println(pair.getSecond());
+                System.out.println();
+            }
+        }
+
+
     }
 
     // Time:O(Cn) Space:O(Cn)
-    static void backpack1(Pair<Integer, Integer>[] inputs, int capacity) {
+    static void backpack1_1(Pair<Integer, Integer>[] inputs, int capacity) {
         int num = inputs.length;
         int[][] dynamics = new int[num + 1][capacity + 1];
         Arrays.fill(dynamics[0], 0);
@@ -75,6 +147,7 @@ public class LearnBackpack {
                 }
                 list.add(inputs[i - 1]);
             }
+            System.out.println(vCount);
         }
 
         System.out.println("Max worth is :" + dynamics[num][capacity]);
@@ -86,7 +159,7 @@ public class LearnBackpack {
     }
 
     // Time:O(Cn) Space:O(C)
-    static void backpack2(Pair<Integer, Integer>[] inputs, int capacity) {
+    static void backpack1_2(Pair<Integer, Integer>[] inputs, int capacity) {
         int num = inputs.length;
         int[] dynamics = new int[capacity + 1];
         Arrays.fill(dynamics, 0);
@@ -114,5 +187,6 @@ public class LearnBackpack {
         for (Pair pair : list) {
             System.out.println(pair.getFirst() + "," + pair.getSecond());
         }
+        System.out.println(vCount);
     }
 }

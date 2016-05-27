@@ -2,65 +2,108 @@ package com.magooup.learn;
 
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.*;
 
 public class Learner {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-        //
-        //int capacity = 10;
-        //
-        //int[] inputVolumes = {4, 3, 5, 2, 5};
-        //int[] inputWorths = {9, 6, 1, 4, 1};
-        //
-        //int num = inputVolumes.length;
-        //int[] chosed = new int[num];
-        //
-        //int[][] dynamics = new int[num + 1][capacity + 1];
-        //for (int i = 0; i <= num; i++) {
-        //    for (int j = 0; j <= capacity; j++) {
-        //        dynamics[i][j] = 0 == i ? 0 : dynamics[i - 1][j];
-        //        if (i > 0 && j > inputVolumes[i - 1]) {
-        //            dynamics[i][j] = Math.max(dynamics[i - 1][j], dynamics[i - 1][j - inputVolumes[i - 1]] + inputWorths[i - 1]);
-        //        }
-        //    }
-        //}
-        //
-        //System.out.println("Max worth is " + dynamics[num][capacity]);
-        //int j = capacity;
-        //for (int i = num; i > 0; i--) {
-        //    if (dynamics[i][j] > dynamics[i - 1][j]) {
-        //        chosed[i - 1] = 1;
-        //        j = j - inputVolumes[i - 1];
-        //        System.out.println(String.format("{%d,[%d,%d]}", i - 1, inputVolumes[i - 1], inputWorths[i - 1]));
-        //    }
-        //}
+    // The number strings
+    static String[] NUMBERS = {"ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE"};
+    // Generate the VOLUMES and VALUES
+    static int[] VOLUMES = new int[NUMBERS.length];
+    static int[] VALUES = new int[NUMBERS.length];
 
-
-        System.out.println(getHexDigits(""));
-    }
-    /**
-     * Get a hex value
-     *
-     * @param value
-     * @return
-     */
-    private static String getHexDigits(String value) {
-        boolean negative = false;
-        String str = value;
-        String hexString = null;
-        if (value.startsWith("-")) {
-            negative = true;
-            str = value.substring(1);
-        }
-        if (str.startsWith("0x") || str.startsWith("0X")) {
-            hexString = str.substring(2);
-            if (negative) {
-                hexString = "-" + hexString;
+    static {
+        for (int i = 0; i < NUMBERS.length; i++) {
+            String num = NUMBERS[i];
+            VOLUMES[i] = num.length();
+            VALUES[i] = 0;
+            for (char c : num.toCharArray()) {
+                VALUES[i] += (int) c - 64;
             }
-            return hexString;
+        }
+        //System.out.println("Volumes: " + Arrays.toString(VOLUMES));
+        //System.out.println("Values: " + Arrays.toString(VALUES));
+    }
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        decrypt("ETHER");
+        decrypt("OZONETOWER");
+        decrypt("OURNEONFOE");
+    }
+
+    static void decrypt(String input) {
+        int capacity = input.length();
+        int worth = 0;
+        for (char c : input.toCharArray()) {
+            worth += (int) c - 64;
+        }
+        //System.out.println("Capacity: " + capacity);
+        //System.out.println("Worth: " + worth);
+        System.out.print("Decrypt the \"" + input + "\": ");
+        List<Integer> list = backpack_variant(VOLUMES, VALUES, capacity, worth);
+        if (null != list) {
+            Collections.sort(list);
+            for (Integer index : list) {
+                System.out.print(String.format("[%d, %s] ", index, NUMBERS[index]));
+            }
+        }
+        System.out.println();
+    }
+
+
+    static List<Integer> backpack_variant(int[] volumes, int[] values, int capacity, int worth) {
+        assert volumes.length == values.length;
+        int length = values.length;
+        Set<Record>[] records = new Set[capacity + 1];
+        //
+        for (int i = 1; i <= length; i++) {
+            int volume = volumes[i - 1];
+            int value = values[i - 1];
+            for (int j = volume; j <= capacity; j++) {
+                Set<Record> last = records[j - volume];
+                Set<Record> current = new HashSet<>();
+                if (null != last) {
+                    for (Record record : last) {
+                        List<Integer> indexes = new ArrayList<>(record.indexes);
+                        indexes.add(i - 1);
+                        int sum = record.worth + value;
+                        current.add(new Record(indexes, sum));
+                    }
+                }
+                if (volume == j) {
+                    current.add(new Record(new ArrayList<>(Arrays.asList(i - 1)), value));
+                }
+                if (current.size() > 0) {
+                    if (null == records[j]) {
+                        records[j] = current;
+                    } else {
+                        records[j].addAll(current);
+                    }
+                }
+            }
+        }
+        // Pick the target worth
+        Set<Record> result = records[capacity];
+        if (null == result) {
+            System.out.println("No result");
+        } else {
+            for (Record record : result) {
+                if (record.worth == worth) {
+                    return record.indexes;
+                }
+            }
         }
         return null;
+    }
+
+    static class Record {
+        List<Integer> indexes;
+        int worth;
+
+        Record(List<Integer> indexes, int worth) {
+            this.indexes = indexes;
+            this.worth = worth;
+        }
     }
 
 }
