@@ -3,6 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.magooup.learn</groupId>
     <artifactId>learn-java</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <distributionManagement>
         <repository>
@@ -14,6 +15,15 @@
             <url>http://192.168.100.86:8081/nexus/content/repositories/zhiyong.ma</url>
         </snapshotRepository>
     </distributionManagement>
+
+
+    <!--repositories-->
+    <repositories>
+        <repository>
+            <id>maven-apache</id>
+            <url>http://127.0.0.1:8081/repository/maven-central/</url>
+        </repository>
+    </repositories>
     <!-- build -->
     <build>
         <plugins>
@@ -23,8 +33,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.2</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -56,26 +66,34 @@
             </plugin>
         </plugins>
     </build>
-    <repositories>
-        <repository>
-            <id>maven-100.86</id>
-            <url>http://192.168.100.86:8081/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>repo2-maven</id>
-            <url>http://repo2.maven.org/maven2/</url>
-        </repository>
-        <repository>
-            <id>maven-ibiblio</id>
-            <url>http://mirrors.ibiblio.org/maven2/</url>
-        </repository>
-        <repository>
-            <id>maven-restlet</id>
-            <name>Public online Restlet repository</name>
-            <url>http://maven.restlet.org</url>
-        </repository>
-    </repositories>
+    <!--<repositories>-->
+    <!--<repository>-->
+    <!--<id>maven-100.86</id>-->
+    <!--<url>http://192.168.100.86:8081/nexus/content/groups/public/</url>-->
+    <!--</repository>-->
+    <!--<repository>-->
+    <!--<id>repo2-maven</id>-->
+    <!--<url>http://repo2.maven.org/maven2/</url>-->
+    <!--</repository>-->
+    <!--<repository>-->
+    <!--<id>maven-ibiblio</id>-->
+    <!--<url>http://mirrors.ibiblio.org/maven2/</url>-->
+    <!--</repository>-->
+    <!--<repository>-->
+    <!--<id>maven-restlet</id>-->
+    <!--<name>Public online Restlet repository</name>-->
+    <!--<url>http://maven.restlet.org</url>-->
+    <!--</repository>-->
+    <!--</repositories>-->
     <dependencies>
+
+        <!-- spark -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.10</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
         <!-- junit -->
         <dependency>
             <groupId>junit</groupId>
@@ -88,29 +106,18 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.5</version>
         </dependency>
-        <!-- common -->
-        <dependency>
-            <groupId>common.utils</groupId>
-            <artifactId>common-utils</artifactId>
-            <version>3.1-SNAPSHOT</version>
-        </dependency>
-        <!--  -->
-        <dependency>
-            <groupId>crawlercommon.core</groupId>
-            <artifactId>crawlercommon-core</artifactId>
-            <version>3.5-SNAPSHOT</version>
-        </dependency>
-        <!-- gora -->
-        <dependency>
-            <groupId>org.apache.gora</groupId>
-            <artifactId>gora-core</artifactId>
-            <version>0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.gora</groupId>
-            <artifactId>gora-hbase</artifactId>
-            <version>0.5</version>
-        </dependency>
+        <!--&lt;!&ndash; common &ndash;&gt;-->
+        <!--<dependency>-->
+        <!--<groupId>common.utils</groupId>-->
+        <!--<artifactId>common-utils</artifactId>-->
+        <!--<version>3.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash;  &ndash;&gt;-->
+        <!--<dependency>-->
+        <!--<groupId>crawlercommon.core</groupId>-->
+        <!--<artifactId>crawlercommon-core</artifactId>-->
+        <!--<version>3.5-SNAPSHOT</version>-->
+        <!--</dependency>-->
         <!-- javax -->
         <dependency>
             <groupId>javax</groupId>
